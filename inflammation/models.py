@@ -88,9 +88,13 @@ class Doctor(Person):
 
 class Patient(Person):
     """A patient in an inflammation study."""
-    def __init__(self, name):
+
+    def __init__(self, name, observations=None):
         super().__init__(name)
+
         self.observations = []
+        if observations is not None:
+            self.observations = observations
 
     def add_observation(self, value, day=None):
         if day is None:
@@ -100,18 +104,10 @@ class Patient(Person):
             except IndexError:
                 day = 0
 
-        new_observation = Observation(day, value)
+        new_observation = Observation(value, day)
 
         self.observations.append(new_observation)
         return new_observation
-
-
-alice = Patient('Alice')
-print(alice)
-
-obs = alice.add_observation(3)
-print(obs)
-
 
 
 class Book:
@@ -123,6 +119,3 @@ class Book:
     def __str__(self):
         return "%s by %s" % (self.title, self.author)
 
-
-b = Book("Ahoy", "Me")
-print(b)
